@@ -57,6 +57,7 @@ public class DFA implements DFAInterface {
 	public void addTransition(String fromState, char onSymb, String toState) {
 		String from = fromState + onSymb;
 		this.transitions.put(from, toState);
+		this.alphabet.add(onSymb);
 	}
 	
 	// documented in FAInterface
@@ -91,6 +92,25 @@ public class DFA implements DFAInterface {
 	
 	// documented in DFAInterface
 	public String toString() {
-		return "";
+		String s = "Q = { ";
+		for (DFAState state : this.finalStates) 
+			s += String.format("%s ", state.toString());
+		s += this.startState.toString() + " ";
+		for (DFAState state : this.states)
+			s += state.toString() + " ";
+		s += "}\n";
+		
+		s += "Sigma = { ";
+		for (Character c : this.alphabet)
+			s += c + " ";
+		s += "}\n";
+		
+		s += String.format("q0 = %s\n", this.startState.toString());
+		
+		s += "F = { ";
+		for (DFAState state: this.finalStates)
+			s += state.toString() + " ";
+		s += "}\n";
+		return s;
 	}
 }
