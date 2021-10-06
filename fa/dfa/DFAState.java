@@ -16,4 +16,14 @@ public class DFAState extends State {
 	public DFAState(String name) {
 		this.name = name;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null)
+			return false;
+		DFAState state = (DFAState) o;
+		return this.name.equals(state.getName());
+	}
 }

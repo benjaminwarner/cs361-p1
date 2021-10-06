@@ -79,6 +79,16 @@ public class DFA implements DFAInterface {
 	
 	// documented in DFAInterface
 	public boolean accepts(String s) {
+		DFAState finalState = this.startState;
+		String[] data = s.split("");
+		for (String transition : data) {
+			String step = finalState.toString() + transition;
+			finalState = new DFAState(this.transitions.get(step));
+		}
+		for (DFAState state : this.finalStates) {
+			if (state.equals(finalState))
+				return true;
+		}
 		return false;
 	}
 	
