@@ -25,9 +25,6 @@ public class DFA implements DFAInterface {
 	
 	/**
 	 * Create an empty DFA.
-	 *
-	 * finalStates and states are stored using a LinkedHashSet to ensure order.
-	 * transitions is stored using a LinkedHashMap for the same reason.
 	 */
 	public DFA() {
 		this.finalStates = new LinkedHashSet<DFAState>();
@@ -92,25 +89,25 @@ public class DFA implements DFAInterface {
 	
 	// documented in DFAInterface
 	public String toString() {
-		String s = "Q = { ";
-		for (DFAState state : this.finalStates) 
-			s += String.format("%s ", state.toString());
-		s += this.startState.toString() + " ";
+		StringBuilder builder = new StringBuilder("Q = { ");
+		for (DFAState state : this.finalStates)
+			builder.append(state.toString() + " ");
+		builder.append(this.startState.toString() + " ");
 		for (DFAState state : this.states)
-			s += state.toString() + " ";
-		s += "}\n";
+			builder.append(state.toString() + " ");
+		builder.append("}\n");
 		
-		s += "Sigma = { ";
+		builder.append("Sigma = { ");
 		for (Character c : this.alphabet)
-			s += c + " ";
-		s += "}\n";
+			builder.append(c + " ");
+		builder.append("}\n");
 		
-		s += String.format("q0 = %s\n", this.startState.toString());
+		builder.append(String.format("q0 = %s\n", this.startState.toString()));
 		
-		s += "F = { ";
+		builder.append("F = { ");
 		for (DFAState state: this.finalStates)
-			s += state.toString() + " ";
-		s += "}\n";
-		return s;
+			builder.append(state.toString() + " ");
+		builder.append("}\n");
+		return builder.toString();
 	}
 }
