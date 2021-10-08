@@ -111,6 +111,24 @@ public class DFA implements DFAInterface {
 			builder.append(c + " ");
 		builder.append("}\n");
 		
+		Set<DFAState> delta = new LinkedHashSet<DFAState>();
+		delta.addAll(this.finalStates);
+		delta.add(this.startState);
+		delta.addAll(this.states);
+		builder.append("delta =\n");
+		builder.append("\t\t");
+		for (Character c: this.alphabet)
+			builder.append(c + "\t");
+		builder.append("\n");
+		for (DFAState state : delta) {
+			builder.append("\t" + state.getName() + "\t");
+			for (Character c : this.alphabet) {
+				String toState = this.transitions.get(state.getName() + c);
+				builder.append(toState + "\t");
+			}
+			builder.append("\n");
+		}
+		
 		builder.append(String.format("q0 = %s\n", this.startState.toString()));
 		
 		builder.append("F = { ");
