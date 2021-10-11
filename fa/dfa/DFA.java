@@ -9,7 +9,14 @@ import fa.State;
 import fa.dfa.DFAState;
 
 /**
- * An implementation of the DFAInterface.
+ * Set and Map implementation of the DFAInterface.
+ * 
+ * accepts is the main method of this class, as it will
+ * determine if a string is accepted by the machine being
+ * modeled. 
+ *
+ * There is only a single start state at a time; final and regular
+ * states are maintained separately in their own sets. 
  *
  * @author Benjamin Warner
  */
@@ -32,51 +39,91 @@ public class DFA implements DFAInterface {
 		this.alphabet = new LinkedHashSet<Character>();
 	}
 	
-	// documented in FAInterface
+	/**
+	 * Sets the start state of this DFA.
+	 *
+	 * @param name the name of the start state for this machine
+	 */
 	public void addStartState(String name) {
 		this.startState = new DFAState(name);
 	}
 	
-	// documented in FAInterface
+	/**
+	 * Add a new state with name to the machine.
+	 *
+	 * @param name the name of the state to add to this machine
+	 */
 	public void addState(String name) {
 		DFAState state = new DFAState(name);
 		this.states.add(state);
 	}
 	
-	// documented in FAInterface
+	/**
+	 * Add a new final state with name to this machine.
+	 *
+	 * @param name the name of the final state to add to this machine
+	 */
 	public void addFinalState(String name) {
 		DFAState state = new DFAState(name);
 		this.finalStates.add(state);
 	}
 	
-	// documented in FAInterface
+	/**
+	 * Add a new transition from one state to another for this machine
+	 *
+	 * @param fromState the name of the state this machine will be transitioning from
+	 * @param onSymb the input character required to perform a transition
+	 * @param toState the name of the state this machine will transition to
+	 */
 	public void addTransition(String fromState, char onSymb, String toState) {
 		String from = fromState + onSymb;
 		this.transitions.put(from, toState);
 		this.alphabet.add(onSymb);
 	}
 	
-	// documented in FAInterface
+	/**
+	 * Get all non-final states of this machine
+	 *
+	 * @return the set of non-final states
+	 */
 	public Set<DFAState> getStates() {
 		return this.states;
 	}
 	
-	// documented in FAInterface
+	/**
+	 * Get all final states of this machine
+	 *
+	 * @return the set of final states
+	 */
 	public Set<DFAState> getFinalStates() {
 		return this.finalStates;
 	}
 	
-	// documented in FAInterface
+	/**
+	 * Get the start state of this machine
+	 *
+	 * @return the start state
+	 */
 	public State getStartState() {
 		return this.startState;
 	}
 	
-	// documented in FAInterface
+	/**
+	 * Get the alphabet of this machine
+	 *
+	 * @return the set of characters that make up this machine's alphabet
+	 */
 	public Set<Character> getABC() {
 		return this.alphabet;
 	}
 	
-	// documented in DFAInterface
+	/**
+	 * Simulate DFA processing on an input string to see if
+	 * the string is accepted by the machine
+	 *
+	 * @param s the string to test for acceptance
+	 * @return true if s is an accepted string of this machine's language and false otherwise
+	 */
 	public boolean accepts(String s) {
 		DFAState finalState = this.startState;
 		String[] data = s.split("");
@@ -96,7 +143,12 @@ public class DFA implements DFAInterface {
 		return null;
 	}
 	
-	// documented in DFAInterface
+	/**
+	 * Returns the formal definition of this machine, which includes
+	 * Q, Sigma, delta, q0, and F
+	 *
+	 * @return a string representation of this machine
+	 */
 	public String toString() {
 		StringBuilder builder = new StringBuilder("Q = { ");
 		for (DFAState state : this.finalStates)
